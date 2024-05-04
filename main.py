@@ -5,6 +5,7 @@ import classes as c
 import design as d
 import random as r
 from settings import background_color,settingsaa
+from testing import serverr
 import colors as cc
 
 pygame.init()
@@ -12,7 +13,7 @@ pygame.init()
 window_width = 1280
 window_height = 720
 window = pygame.display.set_mode((window_width, window_height), pygame.RESIZABLE)
-pygame.display.set_caption("Valor")
+pygame.display.set_caption("TardNet")
 pygame.mouse.set_visible(False)
 
 
@@ -29,19 +30,19 @@ neon  = 150
 color_butt = (0,neon,neon)
 bf = 3
 textcolor = cc.colorlist[12]
-heading = c.Text((window.get_width() // 3.2, window.get_height() // 3), 45,textcolor ,"                TardNet",3)
+heading = c.Text(((window.get_width() // 3.2 )-125, (window.get_height() // 3)-20), 65,textcolor ,"                TardNet",3)
 sizefont = 30
 buttpaddx = 20
 #0c0c0c,201310,351b15,4a2319,5f2a1e,743223,893a27,9e422c,b34931,c85135,dd593a,f2613f
 fcolor = cc.colorlist[2]
 t1 = c.Text((0, 0), sizefont, fcolor, "Join Room",bf)
-t2 = c.Text((0, 0), sizefont, fcolor, "Create Room",bf)
+t2 = c.Text((0, 0), sizefont, fcolor, "Create Room",bf,)
 t3 = c.Text((0, 0), sizefont, fcolor, "Options",bf)
 t4 = c.Text((0, 0), sizefont, fcolor, "Credits",bf)
 t5 = c.Text((0, 0), sizefont, fcolor, "Exit",bf)
 
-b1 = c.button(((heading.x + offsetx), (heading.y + offsety + 10)), butt_w, butt_h, color_butt, (10, 5), t1,)
-b2 = c.button((b1.x-buttpaddx, (b1.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t2,)
+b1 = c.button((((window.get_width() // 3.2 ) + offsetx), ((window.get_height() // 3) + offsety + 10)), butt_w, butt_h, color_butt, (10, 5), t1,)
+b2 = c.button((b1.x-buttpaddx, (b1.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t2,serverr)
 b3 = c.button((b2.x-buttpaddx, (b2.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t3,settingsaa)
 b4 = c.button((b3.x-buttpaddx, (b3.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t4,)
 b5 = c.button((b4.x-buttpaddx, (b4.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t5,exit)
