@@ -48,7 +48,7 @@ class button:
         self.NotHovercolor = c.colorlist[9]
         self.Hovercolor = c.colorlist[4]
 
-        
+        self.disabled = False
         self.text = None
         self.hover = False
         self.text = butt_text
