@@ -18,6 +18,8 @@ class ColorPicker:
         self.x = x  # X-coordinate for the color picker
         self.y = y  # Y-coordinate for the color picker
 
+
+
         # Initial RGB values
         
         self.r_value = iniit[0]
