@@ -37,7 +37,6 @@ def send_messages_to_all(message):
 
 # Function to handle client
 def client_handler(client):
-    
     # Server will listen for client message that will
     # Contain the username
     while 1:
