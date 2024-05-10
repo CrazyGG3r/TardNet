@@ -127,8 +127,8 @@ class TextBox:
         self.cursor_speed = 500  # Blinking speed in milliseconds
         self.label = label  # Add label attribute
         self.ffont = pygame.font.Font(font[fontt], 25)
+    
     def handle_event(self, event):
-        
         self.color = self.active_color if self.active else self.inactive_color
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):

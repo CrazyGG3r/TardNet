@@ -5,6 +5,8 @@ import design as d
 import random as r
 from settings import background_color,settingsaa
 import colors as cc
+import threading
+import dummyserver as servrr
 pygame.init()
 
 def statuser(var = None):
@@ -85,8 +87,13 @@ def serverr(window):
                 if a.text.text == "Start Server":
                     info = [f1.text,f2.text,f3.text]
                     print(info)
+                    servrr.stop = 0
+                    servrr.start_Server(info)
+                    
                     print("Hell yea")
                     
+                if a.text.text == "Stop Server":
+                    servrr.stop = 1
                 information.update_text("Status: {}".format(status))
                 tra.resetTrail()
         if status == "Started":

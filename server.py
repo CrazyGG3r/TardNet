@@ -56,15 +56,11 @@ def client_handler(client):
 # Main function
 def main():
 
-    # Creating the socket class object
-    # AF_INET: we are going to use IPv4 addresses
-    # SOCK_STREAM: we are using TCP packets for communication
+ 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Creating a try catch block
     try:
-        # Provide the server with an address in the form of
-        # host IP and port
+
         server.bind((HOST, PORT))
         print(f"Running the server on {HOST} {PORT}")
     except:
