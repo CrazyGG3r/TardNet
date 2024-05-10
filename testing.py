@@ -35,10 +35,20 @@ def serverr(window):
     t2 = c.Text((0,0),25,(0,0,0),"Stop Server",3)
     b2 = c.button((information.x,information.y+115),200,40,(0,0,0),(20,10),t2,stopuser)
     
+    def exitt(var = None):
+        global ret
+        ret = 1
+        return
+    tback = c.Text((0,0),25,(0,0,0),"Back",3)
+    bback = c.button(((window.get_width()//2)-100,600),100,40,(0,0,0),(20,10),tback,exitt)
     
-    all_butts = [b1,b2]
+    all_butts = [b1,b2,bback]
+    global ret 
+    ret = 0
     while True:
         clicked_buttons = []
+        if ret == 1:
+            return
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -72,8 +82,12 @@ def serverr(window):
         for a in clicked_buttons:
             if a.disabled == False:
                 status = a.action(window)
+                if a.text.text == "Start Server":
+                    info = [f1.text,f2.text,f3.text]
+                    print(info)
+                    print("Hell yea")
+                    
                 information.update_text("Status: {}".format(status))
-                bgg.reset_bg(window)
                 tra.resetTrail()
         if status == "Started":
             b1.disabled = True
