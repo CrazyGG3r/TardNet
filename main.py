@@ -8,7 +8,7 @@ from settings import background_color,settingsaa
 from testing import serverr
 import colors as cc
 import cliente
-
+import chat as tee
 pygame.init()
 
 window_width = 1280
@@ -45,7 +45,7 @@ t5 = c.Text((0, 0), sizefont, fcolor, "Exit",bf)
 b1 = c.button((((window.get_width() // 3.2 ) + offsetx), ((window.get_height() // 3) + offsety + 10)), butt_w, butt_h, color_butt, (10, 5), t1,cliente.clientt)
 b2 = c.button((b1.x-buttpaddx, (b1.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t2,serverr)
 b3 = c.button((b2.x-buttpaddx, (b2.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t3,settingsaa)
-b4 = c.button((b3.x-buttpaddx, (b3.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t4,)
+b4 = c.button((b3.x-buttpaddx, (b3.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t4,tee.chat_room)
 b5 = c.button((b4.x-buttpaddx, (b4.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t5,exit)
 all_text = [heading]
 all_butts = [b1,b2,b3,b4,b5]

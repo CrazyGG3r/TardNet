@@ -1,9 +1,34 @@
 from re import A
+import select
 import pygame
 import random
 import colors as c
 
 font = ['assets\\fonts\\f1.ttf','assets\\fonts\\f2.ttf','assets\\fonts\\f3.ttf','assets\\fonts\\f4.ttf']
+class message:
+    def __init__(self,text,size):
+        self.start = 0
+        self.end = size
+        self.text = [text]
+            
+    def addMsg(self,msg):
+        self.text.append(msg)
+        
+    def displayMsg(self):
+        print(self.text[self.start:self.end])
+    
+    def getMsg(self):
+        return self.text[self.start:self.end]
+        
+    def MoveScope(self,direction):
+        self.start += direction
+        self.end += direction
+        if self.start<0:
+            self.start = 0
+            self.end -= direction
+        if self.end> len(self.text):
+            self.end = len(self.text)
+            self.start-=direction
 
 class Text:
     def __init__(self, coords, font_size, color, text, fonts=0):
@@ -112,6 +137,7 @@ class NormalBox:
 class TextBox:
     def __init__(self, x, y, width, height, max_length=20, inactive_color=c.colorlist[2], active_color=c.colorlist[8], radius=10, placeholder='hello', textcolor=c.colorlist[12], label="",fontt = 3):
         self.rect = pygame.Rect(x, y, width, height)
+        
         self.inactive_color = pygame.Color(inactive_color)
         self.active_color = pygame.Color(active_color)
         self.color = self.inactive_color
@@ -172,7 +198,7 @@ class TextBox:
      
         txt_surface = self.ffont.render(self.text, True, self.textcolor)
         
-        width = max(200, txt_surface.get_width() + 10)
+        width = max(self.rect.w, txt_surface.get_width() + 10)
         self.rect.w = width
         
         if self.cursor_blink and self.active:
