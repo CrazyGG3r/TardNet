@@ -86,7 +86,6 @@ def serverr(window):
                 status = a.action(window)
                 if a.text.text == "Start Server":
                     info = [f1.text,f2.text,f3.text]
-                    print(info)
                     servrr.stop = 0
                     servrr.start_Server(info)
                     

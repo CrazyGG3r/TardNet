@@ -16,7 +16,7 @@ window = pygame.display.set_mode((window_width, window_height), pygame.RESIZABLE
 pygame.display.set_caption("TardNet")
 pygame.mouse.set_visible(False)
 
-
+ 
 
 population = 100
 maxsize = 150

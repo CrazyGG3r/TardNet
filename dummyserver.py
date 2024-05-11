@@ -4,18 +4,36 @@ import threading
 import select
 import logging
 import random as r
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
+from datetime import datetime
+
+current_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+log_filename = f'.\\server log\\server_{current_time}.log'
+logging.basicConfig(filename=log_filename, level=logging.INFO, format='[%(asctime)s-%(levelname)s]: %(message)s')
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(logging.Formatter('[%(asctime)s-%(levelname)s]: %(message)s'))
+logging.getLogger('').addHandler(console_handler)
+
+
+
+
 
 stop = 0
 active_clients = []
+#total thread count:
+# Thread 1= server
+# Thread 2 = listening client 1
+# ... Thread n = client n-1
+
 
 def start_Server(somethinghere):
+    
     threading.Thread(target=start_server, args=(somethinghere, )).start()
     return
 
 def start_server(somethinghere):
     global stop  
-    print(threading.current_thread().name)
+    logging.info(f"Thread no.{threading.current_thread().name} for Server started" )
     Name = somethinghere[0]
     host = somethinghere[1]
     port = int(somethinghere[2])
@@ -27,7 +45,7 @@ def start_server(somethinghere):
 
     try:
         server.bind((host, port))
-        logging.info(f"\t{Name} room running at IP: {host}:{port}")
+        logging.info(f"{Name} room running at IP: {host}:{port}")
     except Exception as e:
         server.close()
         logging.info(f"\tUnable to create bind {Name} to host {host} and port {port}: {e}")
@@ -38,7 +56,7 @@ def start_server(somethinghere):
     while True:
         if stop == 1:
             server.close()
-            print("Server Stopped")
+            logging.info("Server Stopped")
             return
 
 
@@ -61,18 +79,21 @@ def listen_for_messages(client, username):
      while True:
         # Use select to check if the client socket is ready to be read
         ready_to_read, _, _ = select.select([client], [], [], 0.1)  # Timeout of 0.1 seconds
+        try:
+            if ready_to_read:
+                message = client.recv(2048).decode('utf-8')
 
-        if ready_to_read:
-            message = client.recv(2048).decode('utf-8')
-
-            if message:
-                final_msg = f"{username}~{message}"
-                # Send message to all clients (not shown here)
-                logging.info(f"{username}: {message}")
-            else:
-                print(f"The message sent from client {username} is empty")
-                break
-
+                if message:
+                    final_msg = f"{username}~{message}"
+                    # Send message to all clients (not shown here)
+                    logging.info(f"{username}: {message}")
+                    send_messages_to_all(message)
+                else:
+                    logging.info(f"The message sent from client {username} is empty")
+                    break
+        except:
+            logging.info(f"{username} disconnected.")
+            return
 def client_handler(client):
     # Server will listen for client message that will
     # Contain the username
@@ -86,6 +107,6 @@ def client_handler(client):
             send_messages_to_all(prompt_message)
             break
         else:
-            print("Client username is empty")
+            logging.info("Client username is empty")
 
     threading.Thread(target=listen_for_messages, args=(client, username, )).start()
