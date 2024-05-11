@@ -1,23 +1,21 @@
+
 import pygame
 import classes as c
 import design as d
 import random as r
 import colors as cc
-import dummyserver as servrr
+
 pygame.init()
 
-def statuser(var = None):
-    return "Started"
-def stopuser(var =None):
-    return "Stopped"
-def serverr(window):
+
+def clientt(window):
     bgg = d.Background(window,70,1)
     tra = d.Trailsquare(7)
     chunk = (window.get_width()//10)
     backgroud = c.NormalBox(((window.get_width()//10),(window.get_height()//10)),window.get_width()-(chunk*2),window.get_height()-(chunk*2))
-    status = "stopped"
+    status = "Not Connected"
     info = "Status: {}".format(status)
-    heading = c.Text(((window.get_width()//10)+20,(window.get_height()//24)+70),60,cc.colorlist[12],"{Server}",3)
+    heading = c.Text(((window.get_width()//10)+20,(window.get_height()//24)+70),60,cc.colorlist[12],"{Join Room}",3)
     information = c.Text(((window.get_width()//10)+500,(window.get_height()//24)+215),40,cc.colorlist[12],info,3)
     teext = [heading,information]
     
@@ -29,10 +27,9 @@ def serverr(window):
     
     fields = [f1,f2,f3]
 
-    t1 = c.Text((0,0),25,(0,0,0),"Start Server",3)
-    b1 = c.button((heading.x+150,f3.rect.y+40+offset),200,40,(0,0,0),(20,10),t1,statuser)
-    t2 = c.Text((0,0),25,(0,0,0),"Stop Server",3)
-    b2 = c.button((information.x,information.y+115),200,40,(0,0,0),(20,10),t2,stopuser)
+    t1 = c.Text((0,0),25,(0,0,0),"Join Room",3)
+    b1 = c.button((heading.x+150,f3.rect.y+40+offset),200,40,(0,0,0),(20,10),t1,)
+    
     
     def exitt(var = None):
         global ret
@@ -41,7 +38,7 @@ def serverr(window):
     tback = c.Text((0,0),25,(0,0,0),"Back",3)
     bback = c.button(((window.get_width()//2)-100,600),100,40,(0,0,0),(20,10),tback,exitt)
     
-    all_butts = [b1,b2,bback]
+    all_butts = [b1,bback]
     global ret 
     ret = 0
     while True:
@@ -82,23 +79,10 @@ def serverr(window):
         for a in clicked_buttons:
             if a.disabled == False:
                 status = a.action(window)
-                if a.text.text == "Start Server":
+                if a.text.text == "Join Room":
                     info = [f1.text,f2.text,f3.text]
-                    servrr.stop = 0
-                    servrr.start_Server(info)
-                    
-                    print("Hell yea")
-                    
-                if a.text.text == "Stop Server":
-                    servrr.stop = 1
-                information.update_text("Status: {}".format(status))
-                tra.resetTrail()
-        if status == "Started":
-            b1.disabled = True
-            b2.disabled = False
-        else:
-            b1.disabled = False
-            b2.disabled = True
+                    print(info)
+        
         tra.update(pygame.mouse.get_pos())
         
         bgg.draw(window)

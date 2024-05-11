@@ -7,6 +7,7 @@ import random as r
 from settings import background_color,settingsaa
 from testing import serverr
 import colors as cc
+import cliente
 
 pygame.init()
 
@@ -41,7 +42,7 @@ t3 = c.Text((0, 0), sizefont, fcolor, "Options",bf)
 t4 = c.Text((0, 0), sizefont, fcolor, "Credits",bf)
 t5 = c.Text((0, 0), sizefont, fcolor, "Exit",bf)
 
-b1 = c.button((((window.get_width() // 3.2 ) + offsetx), ((window.get_height() // 3) + offsety + 10)), butt_w, butt_h, color_butt, (10, 5), t1,)
+b1 = c.button((((window.get_width() // 3.2 ) + offsetx), ((window.get_height() // 3) + offsety + 10)), butt_w, butt_h, color_butt, (10, 5), t1,cliente.clientt)
 b2 = c.button((b1.x-buttpaddx, (b1.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t2,serverr)
 b3 = c.button((b2.x-buttpaddx, (b2.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t3,settingsaa)
 b4 = c.button((b3.x-buttpaddx, (b3.y + offsety)), butt_w, butt_h, color_butt, (10, 5), t4,)
@@ -64,14 +65,9 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             for a in all_butts:
-                if a.hover:
-                    if not a.isClicked:
+                if a.hover and not a.isClicked:
                         a.isClicked = True
                         clicked_buttons.append(a)
-        if event.type == pygame.MOUSEBUTTONUP:
-            for a in all_butts:
-                if a.hover:
-                    a.isClicked = False
     m = pygame.mouse.get_pos()
     for a in all_butts:
         if m[0] > a.x and m[1] > a.y:
@@ -83,6 +79,7 @@ while running:
             a.hover = False
     for a in clicked_buttons:
         a.action(window)
+        a.isClicked = False
         bgg.reset_bg(window)
         tra.resetTrail()
      

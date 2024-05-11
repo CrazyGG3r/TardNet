@@ -1,6 +1,5 @@
 #this module contains ui settings
 background_color = (0,10,10)
-from tkinter import Button
 import pygame
 import design as d
 import colors as cccc
