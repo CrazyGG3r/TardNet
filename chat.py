@@ -14,18 +14,21 @@ def connect(somethinghere):
     username = somethinghere[0]
     host = somethinghere[1]
     port = int(somethinghere[2])
-    
     server_socket = socket.socket()
-    server_socket.connect((host, port))
-    print("Connected to: {}:{}".format(host,port))
+    try:
+        server_socket.connect((host, port))
+        print("Connected to: {}:{}".format(host,port))
+    except:
+        print("cant connect lol")
     time.sleep(2)
     
-    server_socket.close()
-    # while True:
-    #    m = server.recv(1024).decode()
-    #    print("Server: {}".format(m))
-    #    sm = str(input("Client: "))
-    #    server.send(bytes(sm, "utf-8"))
+    while True:
+       m = server_socket.recv(1024).decode()
+       print("server: {}".format(m))
+       sm = str(input("client: "))
+       server_socket.send(bytes(sm, "utf-8"))
+       break
+    server_socket.close() 
     
 
 def chat_room(window):

@@ -72,8 +72,9 @@ def send_message_to_client(client, message):
 
 
 def send_messages_to_all(message):
-    for user in active_clients:
-        send_message_to_client(user[1], message)
+    if active_clients:
+        for user in active_clients:
+            send_message_to_client(user[1], message)
         
 def listen_for_messages(client, username):
      while True:
@@ -95,8 +96,7 @@ def listen_for_messages(client, username):
             logging.info(f"{username} disconnected.")
             return
 def client_handler(client):
-    # Server will listen for client message that will
-    # Contain the username
+    
     while 1:
 
         # username = client.recv(2048).decode('utf-8')
