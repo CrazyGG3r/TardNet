@@ -28,7 +28,6 @@ def add_message(message):
 
 def connect():
 
-    # try except block
     try:
 
         # Connect to the server

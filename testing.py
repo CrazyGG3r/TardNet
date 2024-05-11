@@ -15,7 +15,13 @@ def serverr(window):
     tra = d.Trailsquare(7)
     chunk = (window.get_width()//10)
     backgroud = c.NormalBox(((window.get_width()//10),(window.get_height()//10)),window.get_width()-(chunk*2),window.get_height()-(chunk*2))
+    
+   
     status = "stopped"
+    if servrr.start == 0:
+        status = "stopped"
+    else:
+        status = "Running"
     info = "Status: {}".format(status)
     heading = c.Text(((window.get_width()//10)+20,(window.get_height()//24)+70),60,cc.colorlist[12],"{Server}",3)
     information = c.Text(((window.get_width()//10)+500,(window.get_height()//24)+215),40,cc.colorlist[12],info,3)
@@ -34,6 +40,8 @@ def serverr(window):
     t2 = c.Text((0,0),25,(0,0,0),"Stop Server",3)
     b2 = c.button((information.x,information.y+115),200,40,(0,0,0),(20,10),t2,stopuser)
     
+    
+        
     def exitt(var = None):
         global ret
         ret = 1
@@ -85,15 +93,17 @@ def serverr(window):
                 if a.text.text == "Start Server":
                     info = [f1.text,f2.text,f3.text]
                     servrr.stop = 0
+                    servrr.start = 1
                     servrr.start_Server(info)
                     
                     print("Hell yea")
                     
                 if a.text.text == "Stop Server":
                     servrr.stop = 1
+                    servrr.start = 0
                 information.update_text("Status: {}".format(status))
                 tra.resetTrail()
-        if status == "Started":
+        if servrr.start == 1:
             b1.disabled = True
             b2.disabled = False
         else:

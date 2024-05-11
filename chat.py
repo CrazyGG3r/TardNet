@@ -4,29 +4,45 @@ import classes as c
 import design as d
 import random as r
 import colors as cc
+import time
+import socket
+import threading
+import socket
 
 pygame.init()
-
+def connect(somethinghere):
+    username = somethinghere[0]
+    host = somethinghere[1]
+    port = int(somethinghere[2])
+    
+    server_socket = socket.socket()
+    server_socket.connect((host, port))
+    print("Connected to: {}:{}".format(host,port))
+    time.sleep(2)
+    
+    server_socket.close()
+    # while True:
+    #    m = server.recv(1024).decode()
+    #    print("Server: {}".format(m))
+    #    sm = str(input("Client: "))
+    #    server.send(bytes(sm, "utf-8"))
+    
 
 def chat_room(window):
     bgg = d.Background(window,70,1)
     tra = d.Trailsquare(7)
     chunk = (window.get_width()//25)
     backgroud = c.NormalBox(((0+chunk),(0+chunk)),window.get_width()-(chunk*2),window.get_height()-(chunk*2))
-    status = "Not Connected"
-    info = "Status: {}".format(status)
+
     heading = c.Text((backgroud.x+20,backgroud.y+20),30,cc.colorlist[12],"{ROOM_NAME}",3)
-    information = c.Text(((window.get_width()//10)+500,(window.get_height()//24)+215),40,cc.colorlist[12],info,3)
     teext = [heading]
     
     offset = 10
 
-    f1 = c.TextBox(heading.x,heading.y+60+offset,200,40,28,placeholder='My Room')
-    f2 = c.TextBox(heading.x,f1.rect.y+40+offset,200,40,15,placeholder='0.0.0.0')
-    f3 = c.TextBox(heading.x,f2.rect.y+40+offset,200,40,5,placeholder='9999')
+    
     
     input1 = c.TextBox(heading.x,window.get_height()-(chunk*2),window.get_width()-(chunk*6.3),40,85,placeholder='Enter message here')
-    fields = [f1,f2,f3,input1]
+    fields = [input1]
 
     t1 = c.Text((0,0),25,(0,0,0),"Send",3)
     b1 = c.button((window.get_width()-(chunk*4.7),input1.rect.y),180,40,(0,0,0),(20,10),t1,)

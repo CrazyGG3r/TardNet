@@ -4,7 +4,7 @@ import classes as c
 import design as d
 import random as r
 import colors as cc
-
+import chat 
 pygame.init()
 
 
@@ -22,7 +22,7 @@ def clientt(window):
     offset = 20
 
     f1 = c.TextBox(heading.x+150,heading.y+60+offset,200,40,28,label='RoomName: ',placeholder='My Room')
-    f2 = c.TextBox(heading.x+150,f1.rect.y+40+offset,200,40,15,label='Server_Ip: ',placeholder='0.0.0.0')
+    f2 = c.TextBox(heading.x+150,f1.rect.y+40+offset,200,40,15,label='Server_Ip: ',placeholder='127.0.0.1')
     f3 = c.TextBox(heading.x+150,f2.rect.y+40+offset,200,40,5,label='Port: ',placeholder='9999')
     
     fields = [f1,f2,f3]
@@ -82,6 +82,7 @@ def clientt(window):
                 if a.text.text == "Join Room":
                     info = [f1.text,f2.text,f3.text]
                     print(info)
+                    chat.connect(info)
         
         tra.update(pygame.mouse.get_pos())
         
