@@ -5,6 +5,8 @@ import design as d
 import random as r
 import colors as cc
 import chat 
+import threading
+import time
 pygame.init()
 
 
@@ -16,7 +18,7 @@ def clientt(window):
     status = "Not Connected"
     info = "Status: {}".format(status)
     heading = c.Text(((window.get_width()//10)+20,(window.get_height()//24)+70),60,cc.colorlist[12],"{Join Room}",3)
-    information = c.Text(((window.get_width()//10)+500,(window.get_height()//24)+215),40,cc.colorlist[12],info,3)
+    information = c.Text(((window.get_width()//10)+480,(window.get_height()//24)+215),40,cc.colorlist[12],info,3)
     teext = [heading,information]
     
     offset = 20
@@ -82,8 +84,9 @@ def clientt(window):
                 if a.text.text == "Join Room":
                     info = [f1.text,f2.text,f3.text]
                     print(info)
-                    chat.connect(info)
-        
+                    threading.Thread(target=chat.connect, args=(info, )).start()
+                    chat.chat_room(window,f1.text)
+                    
         tra.update(pygame.mouse.get_pos())
         
         bgg.draw(window)

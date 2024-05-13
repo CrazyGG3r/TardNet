@@ -84,11 +84,11 @@ def listen_for_messages(client, username):
             if ready_to_read:
                 message = client.recv(2048).decode('utf-8')
 
-                if message:
-                    final_msg = f"{username}~{message}"
+                if message != '':
+                    final_msg = f"({username})> {message}"
                     # Send message to all clients (not shown here)
                     logging.info(f"{username}: {message}")
-                    send_messages_to_all(message)
+                    send_messages_to_all(final_msg)
                 else:
                     logging.info(f"The message sent from client {username} is empty")
                     break
@@ -103,7 +103,7 @@ def client_handler(client):
         username = f"Bot{r.randint(0,1000)}"
         if username != '':
             active_clients.append((username, client))
-            prompt_message = "SERVER~" + f"{username} added to the chat"
+            prompt_message = f"{username} entered the chat"
             send_messages_to_all(prompt_message)
             break
         else:

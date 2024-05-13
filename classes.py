@@ -6,29 +6,37 @@ import colors as c
 
 font = ['assets\\fonts\\f1.ttf','assets\\fonts\\f2.ttf','assets\\fonts\\f3.ttf','assets\\fonts\\f4.ttf']
 class message:
-    def __init__(self,text,size):
-        self.start = 0
-        self.end = size
-        self.text = [text]
-            
+    def __init__(self,text= ' ',size = 4):
+        self.text = [text,]
+        self.end = 0
+        self.size = size
+        self.start = len(self.text)
+
+
     def addMsg(self,msg):
         self.text.append(msg)
+
         
     def displayMsg(self):
-        print(self.text[self.start:self.end])
+        self.end = len(self.text)
+        self.start = self.end - self.size
+
     
+
     def getMsg(self):
         return self.text[self.start:self.end]
         
+
     def MoveScope(self,direction):
         self.start += direction
         self.end += direction
         if self.start<0:
-            self.start = 0
             self.end -= direction
+            self.start = 0 
         if self.end> len(self.text):
             self.end = len(self.text)
-            self.start-=direction
+            self.start = self.end - self.size
+
 
 class Text:
     def __init__(self, coords, font_size, color, text, fonts=0):
@@ -97,20 +105,7 @@ class button:
     def updateColor(self):
         self.NotHovercolor = c.colorlist[9]
         self.Hovercolor = c.colorlist[4]
-class CreateDrone:
-    def __init__(self, radius, position, speed, destination, name, color):
-        self.radius = radius
-        self.position = position
-        self.speed = speed
-        self.des = destination
-        self.name = str(name)
-        self.color = color
-        self.fontColor = (0,190,190)
-    def draw(self, window):
-        pygame.draw.circle(window, self.color, self.position, self.radius)
-       
-        name_surface = pygame.font.SysFont(None, 20).render(self.name, True, self.fontColor)
-        window.blit(name_surface, (self.position[0] - self.radius, self.position[1] + self.radius + 10))
+
 class NormalBox:
     def __init__(self,coords,wdith,height,color = c.colorlist[0],boundaryColor = c.colorlist[12]):
         self.x = coords[0]
@@ -135,7 +130,7 @@ class NormalBox:
 
 
 class TextBox:
-    def __init__(self, x, y, width, height, max_length=20, inactive_color=c.colorlist[2], active_color=c.colorlist[8], radius=10, placeholder='hello', textcolor=c.colorlist[12], label="",fontt = 3):
+    def __init__(self, x, y, width, height, max_length=20, inactive_color=c.colorlist[2], active_color=c.colorlist[8], radius=10, placeholder='hello', textcolor=c.colorlist[12], label="",fontt = 3,style = 0):
         self.rect = pygame.Rect(x, y, width, height)
         
         self.inactive_color = pygame.Color(inactive_color)
@@ -153,7 +148,9 @@ class TextBox:
         self.cursor_speed = 500  # Blinking speed in milliseconds
         self.label = label  # Add label attribute
         self.ffont = pygame.font.Font(font[fontt], 25)
-    
+        self.style = style
+        self.ready = False
+        
     def handle_event(self, event):
         self.color = self.active_color if self.active else self.inactive_color
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -166,10 +163,12 @@ class TextBox:
         if event.type == pygame.KEYDOWN:
             if self.active:
                 self.textcolor = c.colorlist[2]
-                if event.key == pygame.K_RETURN:
-                    print(self.text)  # Print the entered text when Enter is pressed
-                    self.text = ''  # Clear the text input after printing
-                elif event.key == pygame.K_BACKSPACE:
+                # if event.key == pygame.K_RETURN:
+                #     if self.style == 1:
+                #         self.ready == True
+                #     print(self.text)  # Print the entered text when Enter is pressed
+                #     self.text = ''  # Clear the text input after printing
+                if event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]  # Remove the last character
                 elif len(self.text) < self.max_length:
                     self.text += event.unicode  # Add the typed character to the text
@@ -210,5 +209,3 @@ class TextBox:
         
             
         surface.blit(txt_surface, (self.rect.x + 5, self.rect.y+10))
-def limit_value(value, min_value, max_value):
-    return max(min_value, min(max_value, value))
