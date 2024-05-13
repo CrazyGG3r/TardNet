@@ -4,14 +4,14 @@ import classes as c
 import design as d
 import random as r
 import colors as cc
-import time
 import socket
 import threading
 import queue
 import socket
+import select
 
 global clientsideMSG
-clientsideMSG = c.message('~ you have entered the chat ~',10)
+clientsideMSG = c.message('_you have entered the chat_',10)
 
 connected = 0
 
@@ -39,15 +39,16 @@ def connect(somethinghere):
         return
   
     while True:
-        m = server_socket.recv(2048).decode()
-        if m:
-            # print("server: {}".format(m))
-            clientsideMSG.addMsg(m)
+        ready_to_read, _, _ = select.select([server_socket], [], [], 0.1)
+        for sock in ready_to_read:
+            m = sock.recv(2048).decode()
+            if m:
+                print("server: {}".format(m))
+                clientsideMSG.addMsg(m)
         try:
-            # Block until there's something in the buffer_queue
-            buffer = buffer_queue.get()
-            server_socket.send(bytes(buffer, "utf-8"))
-            # print("Sent:", buffer)
+                buffer = buffer_queue.get_nowait()
+                server_socket.send(bytes(buffer, "utf-8"))
+                print("Sent:", buffer)
         except queue.Empty:
             pass
         
